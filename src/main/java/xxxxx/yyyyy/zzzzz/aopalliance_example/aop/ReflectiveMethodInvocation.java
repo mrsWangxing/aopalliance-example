@@ -32,10 +32,6 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
 
     @Override
     public Object proceed() throws Throwable {
-//        if (this.i == this.interceptors.length - 1) {
-//            return invokeJoinpoint();
-//        }
-//        return interceptors[++i].invoke(this);
         return (this.i == this.interceptors.length - 1)
                 ? invokeJoinpoint()
                 : interceptors[++i].invoke(this);
