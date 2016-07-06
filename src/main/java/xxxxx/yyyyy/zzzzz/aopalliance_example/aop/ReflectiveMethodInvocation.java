@@ -13,7 +13,7 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
     private final MethodInterceptor[] interceptors;
     private int i = -1;
 
-    public ReflectiveMethodInvocation(final Object target, final Method method, final Object[] arguments, final MethodInterceptor[] interceptors) {
+    public ReflectiveMethodInvocation(Object target, Method method, Object[] arguments, MethodInterceptor[] interceptors) {
         this.target = target;
         this.method = method;
         this.arguments = arguments;
@@ -34,7 +34,7 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
     public Object proceed() throws Throwable {
         return (this.i == this.interceptors.length - 1)
                 ? invokeJoinpoint()
-                : interceptors[++i].invoke(this);
+                : this.interceptors[++i].invoke(this);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
 
     private Object invokeJoinpoint() {
         try {
-            return method.invoke(target, arguments);
+            return this.method.invoke(this.target, this.arguments);
         } catch (ReflectiveOperationException cause) {
             throw new RuntimeException(cause);
         }

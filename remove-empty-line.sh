@@ -13,9 +13,17 @@ if [ $? -eq 0 ]; then
     mvn clean
 fi
 
-for x in $(find -type f \( -name \*.java -o -name \*.xml \))
-do
-    echo ${x}
-    grep -v '^\s*$' ${x} > ${x}.$$
-    mv ${x}.$$ ${x}
-done
+find -type f -name '*.java'       | xargs sed -i '/^\s*$/d'
+find -type f -name '*.xml'        | xargs sed -i '/^\s*$/d'
+#find -type f -name '*.properties' | xargs sed -i '/^\s*$/d'
+#find -type f -name '*.jsp'        | xargs sed -i '/^\s*$/d'
+
+#for x in $(find -type f \( -name \*.java -o -name \*.xml \))
+#do
+#    echo ${x}
+#    grep -v '^\s*$' ${x} > /dev/null
+#    if [ $? -ne 0 ]; then
+#        grep -v '^\s*$' ${x} > ${x}.$$
+#        mv ${x}.$$ ${x}
+#    fi
+#done
